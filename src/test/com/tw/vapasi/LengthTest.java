@@ -35,7 +35,7 @@ class LengthTest {
     }
 
     @Test
-    void expectThousandMeterEqualToOneKiloMeter() {
+    void expectOneThousandMeterEqualToOneKiloMeter() {
         Length thousandMeter = new Length(1000, "m");
         Length oneKiloMeter = new Length(1, "km");
         assertEquals(thousandMeter, oneKiloMeter);
@@ -49,10 +49,10 @@ class LengthTest {
     }
 
     @Test
-    void expectOneKiloMeterEqualToHundredCm() {
-        Length hundredCm = new Length(100, "cm");
-        Length oneMeter = new Length(1, "m");
-        assertEquals(oneMeter, hundredCm);
+    void expectOneKiloMeterEqualToOneLakhCm() {
+        Length oneLakhCm = new Length(100000, "cm");
+        Length oneKiloMeter = new Length(1, "km");
+        assertEquals(oneKiloMeter, oneLakhCm);
     }
 
 }

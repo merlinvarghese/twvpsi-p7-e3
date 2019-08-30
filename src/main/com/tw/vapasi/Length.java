@@ -10,12 +10,36 @@ class Length {
     private final static int MULTIPLIER_CM_METER = 100;
     private final static int MULTIPLIER_CM_KILOMETER = 100000;
 
-    private int value;
-    private String unit;
+    private final int value;
+    private final String unit;
 
     Length(int value, String unit) {
         this.value = value;
         this.unit = unit;
+    }
+
+    private boolean compareTo(Length other) {
+        Length newLengthThis = convertToCentiMeter(this);
+        Length newLengthOther = convertToCentiMeter(other);
+        return (newLengthThis.value == newLengthOther.value);
+    }
+
+    // Converts all length objects to corresponding cm object
+    private Length convertToCentiMeter(Length length) {
+        Length convertedLength;
+        int value = 0;
+        String unit = null;
+        if (length.unit.equals(CM)) return length;
+        if (length.unit.equals(METER)) {
+            value = length.value * MULTIPLIER_CM_METER;
+            unit = CM;
+        }
+        if (length.unit.equals(KILOMETER)) {
+            value = length.value * MULTIPLIER_CM_KILOMETER;
+            unit = CM;
+        }
+        convertedLength = new Length(value, unit);
+        return convertedLength;
     }
 
     @Override
@@ -23,32 +47,8 @@ class Length {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Length other = (Length) o;
-
-        return compare(other);
+        return compareTo(other);
     }
-
-    boolean compare(Length other) {
-        convertToCentiMeter(this);
-        convertToCentiMeter(other);
-        return (this.value == other.value);
-    }
-
-    // Converts all length objects to corresponding cm object
-    Length convertToCentiMeter(Length length) {
-        if (length.unit == CM) {
-            return length;
-        }
-        if (length.unit == METER) {
-            length.value = length.value * MULTIPLIER_CM_METER;
-            length.unit = CM;
-        }
-        if (length.unit == KILOMETER) {
-            length.value = length.value * MULTIPLIER_CM_KILOMETER;
-            length.unit = CM;
-        }
-        return length;
-    }
-
 
     @Override
     public int hashCode() {
