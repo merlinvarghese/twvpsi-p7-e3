@@ -7,24 +7,52 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class LengthTest {
     @Test
-    void expectHundredCmEqualToOneMeter(){
+    void expectHundredCmEqualToOneMeter() {
         Length hundredCm = new Length(100, "cm");
         Length oneMeter = new Length(1, "m");
         assertEquals(hundredCm, oneMeter);
     }
 
     @Test
-    void expectTwoHundredCmNotEqualToOneMeter(){
+    void expectTwoHundredCmNotEqualToOneMeter() {
         Length hundredCm = new Length(200, "cm");
         Length oneMeter = new Length(1, "m");
         assertNotEquals(hundredCm, oneMeter);
     }
 
-/*    @Test
-    void expectOneMeterEqualToHundredCm(){
+    @Test
+    void expectOneMeterEqualToHundredCm() {
         Length hundredCm = new Length(100, "cm");
         Length oneMeter = new Length(1, "m");
         assertEquals(oneMeter, hundredCm);
-    }*/
+    }
+
+    @Test
+    void expectTwoMeterNotEqualToHundredCm() {
+        Length hundredCm = new Length(100, "cm");
+        Length twoMeter = new Length(2, "m");
+        assertNotEquals(twoMeter, hundredCm);
+    }
+
+    @Test
+    void expectThousandMeterEqualToOneKiloMeter() {
+        Length thousandMeter = new Length(1000, "m");
+        Length oneKiloMeter = new Length(1, "km");
+        assertEquals(thousandMeter, oneKiloMeter);
+    }
+
+    @Test
+    void expectOneThousandMeterNotEqualToTwoKiloMeter() {
+        Length thousandMeter = new Length(1000, "m");
+        Length twoKiloMeter = new Length(2, "km");
+        assertNotEquals(thousandMeter, twoKiloMeter);
+    }
+
+    @Test
+    void expectOneKiloMeterEqualToHundredCm() {
+        Length hundredCm = new Length(100, "cm");
+        Length oneMeter = new Length(1, "m");
+        assertEquals(oneMeter, hundredCm);
+    }
 
 }
