@@ -4,17 +4,8 @@ import java.util.Objects;
 
 //understands measurements
 class Length {
-    private final static int MULTIPLIER_CM_METER = 100;
-    private final static int MULTIPLIER_CM_KILOMETER = 100000;
-
     private final double magnitude;
     private final Unit unit;
-
-    enum Unit {
-        CM,
-        METER,
-        KM
-    }
 
     private Length(double magnitude, Unit unit) {
         this.magnitude = magnitude;
@@ -30,7 +21,7 @@ class Length {
     }
 
     static Length meter(double magnitude) {
-        return new Length(magnitude, Unit.METER);
+        return new Length(magnitude, Unit.M);
     }
 
     @Override
@@ -38,7 +29,7 @@ class Length {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Length other = (Length) o;
-        return convertToCentiMeter() == other.convertToCentiMeter();
+        return convertToBaseUnit() == other.convertToBaseUnit();
     }
 
     @Override
@@ -46,16 +37,8 @@ class Length {
         return Objects.hash(magnitude, unit.hashCode());
     }
 
-    private double convertToCentiMeter() {
-        switch (unit) {
-            case METER:
-                return magnitude * MULTIPLIER_CM_METER;
-            case KM:
-                return magnitude * MULTIPLIER_CM_KILOMETER;
-            default:
-                return magnitude;
-        }
-
+    private double convertToBaseUnit() {
+        return unit.convertToBase(magnitude);
     }
 
 }
