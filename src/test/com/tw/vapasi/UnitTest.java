@@ -25,6 +25,4 @@ class UnitTest {
         double actualOutput = unit.convertToBase(20);
         assertEquals(2000000, actualOutput);
     }
-
-
 }

@@ -3,7 +3,7 @@ package com.tw.vapasi;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.tw.vapasi.Measurement.*;
+import static com.tw.vapasi.AddableMeasurement.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -80,14 +80,14 @@ class MeasurementTest {
 
     @Test
     void expect300cmForAdditionOf100CMAnd200CM() throws IncompatibleMeasurementTypeException {
-        Measurement cm100 = cm(100);
+        AddableMeasurement cm100 = cm(100);
         assertEquals(cm(300), cm100.add(cm(200)));
     }
 
     @Test
     void expect2200GMAdditionOf2KGAnd200GM() {
         try {
-            Measurement kg2 = kg(2);
+            AddableMeasurement kg2 = kg(2);
             Measurement actualOutput = kg2.add(gm(200));
             assertEquals(kg(2.2), actualOutput);
         } catch (Exception e) {
@@ -98,28 +98,33 @@ class MeasurementTest {
     @Test
     void expectFailOnAdditionOf2MAnd200GM() {
         try {
-            Measurement m2 = meter(2);
+            AddableMeasurement m2 = meter(2);
             m2.add(gm(100));
             Assertions.fail("Incompatible types");
         } catch (Exception e) {
             //expected path
-       }
+        }
     }
 
     @Test
-    void expect274KEquals1C()
-    {
+    void expect274KEquals1C() {
         Measurement c1 = celcius(1);
         Measurement k274 = kelvin(274);
-        Assertions.assertEquals( c1,k274);
+        assertEquals(c1, k274);
     }
 
     @Test
-    void expect100FahrenheitEquals37_77C()
-    {
+    void expect10FahrenheitEquals12_27C() {
         Measurement c12_27 = celcius(-12.27);
         Measurement f10 = fahrenheit(10);
-        Assertions.assertEquals(c12_27,f10);
+        assertEquals(c12_27, f10);
+    }
+
+    @Test
+    void expect35_8FahrenheitEquals274K() {
+        Measurement k274 = kelvin(274);
+        Measurement f35_8 = fahrenheit(35.8);
+        assertEquals(k274, f35_8);
     }
 
 }
