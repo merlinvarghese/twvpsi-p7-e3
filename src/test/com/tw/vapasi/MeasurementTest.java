@@ -105,4 +105,21 @@ class MeasurementTest {
             //expected path
        }
     }
+
+    @Test
+    void expect274KEquals1C()
+    {
+        Measurement c1 = celcius(1);
+        Measurement k274 = kelvin(274);
+        Assertions.assertEquals( c1,k274);
+    }
+
+    @Test
+    void expect100FahrenheitEquals37_77C()
+    {
+        Measurement c12_27 = celcius(-12.27);
+        Measurement f10 = fahrenheit(10);
+        Assertions.assertEquals(c12_27,f10);
+    }
+
 }

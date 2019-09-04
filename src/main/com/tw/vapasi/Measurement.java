@@ -6,49 +6,56 @@ import java.util.Objects;
 class Measurement {
     private final double magnitude;
     private final Unit unit;
-    private final TYPE type;
 
-    enum TYPE {
-        WEIGHT,
-        LENGTH
-    }
 
     Measurement add(Measurement other) throws IncompatibleMeasurementTypeException {
-        if (!isSameType(other)) {
+        if (this.unit.isNotOfSameType(other.unit)) {
             throw new IncompatibleMeasurementTypeException();
         }
         double totalInBase = this.convertToBaseUnit() + other.convertToBaseUnit();
-        return new Measurement(convertToUnit(totalInBase), this.unit, this.type);
+        return new Measurement(convertToUnit(totalInBase), this.unit);
     }
 
     private double convertToUnit(double valueInBase) {
         return this.unit.convertFromBase(valueInBase);
     }
 
-    private Measurement(double magnitude, Unit unit, TYPE type) {
+    private Measurement(double magnitude, Unit unit) {
         this.magnitude = magnitude;
         this.unit = unit;
-        this.type = type;
     }
 
     static Measurement cm(double magnitude) {
-        return new Measurement(magnitude, Unit.CM, TYPE.LENGTH);
+        return new Measurement(magnitude, Unit.CM);
     }
 
     static Measurement km(double magnitude) {
-        return new Measurement(magnitude, Unit.KM, TYPE.LENGTH);
+        return new Measurement(magnitude, Unit.KM);
     }
 
     static Measurement meter(double magnitude) {
-        return new Measurement(magnitude, Unit.M, TYPE.LENGTH);
+        return new Measurement(magnitude, Unit.M);
     }
 
     static Measurement kg(double magnitude) {
-        return new Measurement(magnitude, Unit.KG, TYPE.WEIGHT);
+        return new Measurement(magnitude, Unit.KG);
     }
 
     static Measurement gm(double magnitude) {
-        return new Measurement(magnitude, Unit.GM, TYPE.WEIGHT);
+        return new Measurement(magnitude, Unit.GM);
+    }
+
+    static Measurement celcius( double magnitude )
+    {
+        return new Measurement(magnitude,Unit.CELCIUS);
+    }
+    static Measurement kelvin( double magnitude )
+    {
+        return new Measurement(magnitude,Unit.KELVIN);
+    }
+    static Measurement fahrenheit( double magnitude )
+    {
+        return new Measurement(magnitude,Unit.FAHRENHEIT);
     }
 
     @Override
@@ -56,7 +63,7 @@ class Measurement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Measurement other = (Measurement) o;
-        if (!isSameType(other)) return false;
+        if ( this.unit.isNotOfSameType( other.unit)) return false;
         return convertToBaseUnit() == other.convertToBaseUnit();
     }
 
@@ -65,12 +72,15 @@ class Measurement {
         return Objects.hash(magnitude, unit.hashCode());
     }
 
-    private boolean isSameType(Measurement other) {
-        return this.type.equals(other.type);
-    }
-
     private double convertToBaseUnit() {
         return unit.convertToBase(magnitude);
     }
 
+    @Override
+    public String toString() {
+        return "Measurement{" +
+                "magnitude=" + magnitude +
+                ", unit=" + unit +
+                '}';
+    }
 }
